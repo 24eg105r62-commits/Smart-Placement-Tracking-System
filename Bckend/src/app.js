@@ -17,9 +17,12 @@ import { errorHandler, notFoundHandler } from './middlewares/errorHandler.js';
 
 const app = express();
 
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
-  .split(',')
-  .map((origin) => origin.trim());
+const allowedOrigins = [
+  'https://smart-placement-tracking-system.vercel.app',
+  ...(process.env.CLIENT_URL || 'http://localhost:5173')
+    .split(',')
+    .map((origin) => origin.trim().replace(/\/$/, ''))
+];
 
 // Any localhost/127.0.0.1 origin is allowed regardless of port — lets the
 // frontend run on whatever port Vite picks (5173, 5174, ...) during development.
